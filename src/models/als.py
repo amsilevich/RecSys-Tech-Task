@@ -95,7 +95,7 @@ class ALSModel(CollaborativeFilteringModel):
             distance = self._dist_between_subspaces(U_k_previous, U_k)
         return self
 
-    def recommend(self, interactions: sparse.csr_matrix, target_users: np.ndarray, count: int) -> sparse.csr_matrix:
+    def recommend(self, interactions: sparse.csr_matrix, target_users: np.ndarray, count: int) -> np.ndarray:
         """
         Recommends 'count' items for 'target_users'
 
@@ -110,9 +110,8 @@ class ALSModel(CollaborativeFilteringModel):
 
         Returns
         -------
-             matrix: sparse.csr_matrix
-             matrix[i, j] == 1 if j-th item recommends for i-th user
-                             0 otherwise
+            matrix: np.ndarray
+            matrix[i, j] == item_id if item_id is recommended for i-th user from 'target_users'
         """
         recommendations = interactions[target_users] @ self.V.T @ self.V
         return np.argsort(recommendations, axis=1)[:, ::-1][:, :count]
