@@ -1,12 +1,13 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 from scipy import sparse
 
 from src.columns import Columns
+from src.datasets.dataset import Dataset
 
 
-class UsersDataset:
+class UsersDataset(Dataset):
     """
     Class to contain users features
 
@@ -14,11 +15,11 @@ class UsersDataset:
     ----------
     user_age: pd.DataFrame
         Table of users ages which contains columns:
-            - 'Columns.User' - user_id
+            - 'Columns.User' - user id
             - 'Columns.UserAge' - user age
     user_region: pd.DataFrame
         Table of users regions which contains columns:
-            - 'Columns.User' - user_id
+            - 'Columns.User' - user id
             - 'Columns.UserRegion' - user region (one-hot encoded format)
 
     Attributes
@@ -30,20 +31,24 @@ class UsersDataset:
 
     Raises
     ------
-        KeyError: if there isn't come necessary columns in interactions table
+        KeyError: if there isn't come necessary columns in init tables
     """
     def __init__(self, user_age: pd.DataFrame, user_region: pd.DataFrame) -> None:
+        user_age_columns = {Columns.User, Columns.UserAge}
+        user_region_columns = {Columns.User, Columns.UserRegion}
+        self._check_columns_correctness((user_age_columns, user_age), (user_region_columns, user_region))
+
         self.user_age = user_age
         self.user_region = user_region
 
-    def get_user_features_sparce_matrix(self) -> sparse.csr_matrix:
+    def get_features_sparse_matrix(self) -> sparse.csr_matrix:
         """
         Combines all tables with user info and stores to compressed sparse matrix.
         i-th row of the matrix responds to the user's by i-th id features.
 
         Returns
         -------
-            sparce.csr_matrix
+            sparse.csr_matrix
         """
         users_num = max(self.user_age.shape[0], self.user_region.shape[0])
 
@@ -62,7 +67,7 @@ class UsersDataset:
             (
                 self.user_age[Columns.UserAge].values,
                 (
-                    self.user_age['row'].values,
+                    self.user_age[Columns.User].values,
                     np.zeros(self.user_age.shape[0], dtype=int)
                 )
             ),

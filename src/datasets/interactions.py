@@ -4,9 +4,10 @@ from collections import Counter
 from scipy import sparse
 
 from src.columns import Columns
+from src.datasets.dataset import Dataset
 
 
-class InteractionsDataset:
+class InteractionsDataset(Dataset):
     """
     Class to contain users-items interactions
 
@@ -28,31 +29,9 @@ class InteractionsDataset:
         KeyError: if there isn't come necessary columns in interactions table
     """
 
-    @staticmethod
-    def _check_columns_correctness(interactions: pd.DataFrame) -> None:
-        """
-        Checks the columns names correctness in interactions.
-
-        Parameters
-        ----------
-        interactions: pd.DataFrame
-            Table of interactions
-
-        Returns
-        -------
-            None
-
-        Raises
-        ------
-            KeyError: if there isn't come necessary columns in interactions table
-        """
-        custom_columns = {Columns.UserInteractions, Columns.UserInteractions, Columns.DataInteractions}
-        if not custom_columns.issubset(interactions.columns):
-            raise KeyError(f"User-Item interactions table should contain at least columns: "
-                           f"{Columns.UserInteractions}, {Columns.UserInteractions}, {Columns.DataInteractions}")
-
     def __init__(self, interactions: pd.DataFrame) -> None:
-        self._check_columns_correctness(interactions)
+        custom_columns = {Columns.UserInteractions, Columns.UserInteractions, Columns.DataInteractions}
+        super()._check_columns_correctness((custom_columns, interactions))
         self.interactions = interactions
 
     def filter_non_informative_data(self, column: str, threshold: int) -> 'InteractionsDataset':
@@ -75,7 +54,7 @@ class InteractionsDataset:
             self.interactions[self.interactions.apply(lambda row: counter[row['row']] >= threshold, axis=1)]
         return self
 
-    def to_matrix(self) -> sparse.csr_matrix:
+    def get_features_sparse_matrix(self) -> sparse.csr_matrix:
         """
         Converts interactions table to compressed sparse matrix
 
