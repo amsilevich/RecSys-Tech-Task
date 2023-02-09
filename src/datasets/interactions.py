@@ -1,7 +1,7 @@
 import pandas as pd
 
-from scipy import sparse
 from collections import Counter
+from scipy import sparse
 
 from src.columns import Columns
 
