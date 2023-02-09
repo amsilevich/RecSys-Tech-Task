@@ -12,29 +12,12 @@ class CollaborativeFilteringModel(ABC):
     @abstractmethod
     def fit(self, train_interactions: sparse.csr_matrix) -> 'CollaborativeFilteringModel':
         """
-        Fits the model on the interactions train data
-
-        Parameters
-        ----------
-            train_interactions: sparse.csr_matrix
-                User-Item interactions
-
-        Returns
-        -------
-            CollaborativeFilteringModel
-                Fitted model
+        Fits the model on the interactions train data. Should be implemented in child classes.
         """
         pass
 
-    def recommend(self, target_users: np.ndarray, count: int) -> sparse.csr_matrix:
+    def recommend(self, interactions: sparse.csr_matrix, target_users: np.ndarray, count: int) -> sparse.csr_matrix:
         """
-        Recommends 'count' items for 'target_users'
-
-        Parameters
-        ----------
-        target_users: np.ndarray
-            Users ids which will receive the recommendations
-        count: int
-            Count of recommendations
+        Recommends 'count' items for 'target_users' from interactions matrix. Should be implemented in child classes.
         """
         pass

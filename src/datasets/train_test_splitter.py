@@ -13,7 +13,8 @@ class TrainTestSplitter:
     @staticmethod
     def split_interactions(filtered_interactions: InteractionsDataset, items_for_user_threshold: int,
                            test_items_for_user: int, test_data_percent: float = 0.2) -> tuple[sparse.csr_matrix,
-                                                                                              sparse.csr_matrix]:
+                                                                                              sparse.csr_matrix,
+                                                                                              np.ndarray]:
         """
         Splits the 'filtered_interactions' dataset
 
@@ -46,4 +47,4 @@ class TrainTestSplitter:
             interactions_train[test_user, test_items] = 0
             interactions_test[test_user] = csr_interactions[test_user] - interactions_train[test_user]
 
-        return interactions_train, interactions_test, test
+        return interactions_train, interactions_test, test_users
