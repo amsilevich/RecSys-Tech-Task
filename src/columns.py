@@ -4,7 +4,7 @@ class Columns:
     """
     UserInteractions: str = "row"
     ItemInteractions: str = "col"
-    DataInteractions: str = "col"
+    DataInteractions: str = "data"
 
     User: str = "row"
     UserAge: str = "col"

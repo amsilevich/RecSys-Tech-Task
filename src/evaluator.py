@@ -1,7 +1,7 @@
 import numpy as np
 
 from scipy import sparse
-
+from tqdm import tqdm
 
 class EvaluationMetrics:
     """
@@ -28,10 +28,11 @@ class EvaluationMetrics:
         """
         test_users_num = real_recommendations.shape[0]
         average_precisions = []
-        for user in range(test_users_num):
+        for user in tqdm(range(test_users_num)):
             _, real_items = np.nonzero(real_recommendations[user])
-            is_matched = np.isin(predicted_recommendations[:, :k], real_items)
+            is_matched = np.isin(predicted_recommendations[user, :k], real_items)
+
             precisions_k = np.cumsum(is_matched) / (np.arange(len(is_matched)) + 1)
-            average_precisions.append(precisions_k)
+            average_precisions.append(precisions_k * is_matched)
 
         return np.mean(average_precisions).item()

@@ -51,7 +51,8 @@ class InteractionsDataset(Dataset):
         """
         counter = Counter(self.interactions[column].values)
         self.interactions = \
-            self.interactions[self.interactions.apply(lambda row: counter[row['row']] >= threshold, axis=1)]
+            self.interactions[self.interactions.apply(lambda row: counter[row[column]] >= threshold, axis=1)]
+
         return self
 
     def get_features_sparse_matrix(self) -> sparse.csr_matrix:

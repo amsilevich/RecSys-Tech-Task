@@ -9,7 +9,7 @@ class Dataset(ABC):
     Abstract dataset class
     """
     @staticmethod
-    def _check_columns_correctness(*args: tuple[set[str], pd.Dataframe]):
+    def _check_columns_correctness(*args: tuple[set[str], pd.DataFrame]):
         """
         Checks the columns names correctness in input dataframes.
 

@@ -1,8 +1,9 @@
 import numpy as np
 
 from scipy import sparse
+from tqdm import tqdm
 
-from interactions import InteractionsDataset
+from .interactions import InteractionsDataset
 
 
 class TrainTestSplitter:
@@ -37,14 +38,16 @@ class TrainTestSplitter:
         csr_interactions = filtered_interactions.get_features_sparse_matrix()
         potential_test_users, _ = np.nonzero((csr_interactions.sum(axis=1) > items_for_user_threshold))
         users_num = csr_interactions.shape[0]
-        test_users = np.random_choice(potential_test_users, test_data_percent * users_num)
+        test_users = np.random.choice(potential_test_users, int(test_data_percent * users_num))
 
         interactions_train: sparse.csr_matrix = csr_interactions.copy()
         interactions_test: sparse.csr_matrix = csr_interactions[test_users].copy()
-        for test_user in test_users:
+        for test_user in tqdm(test_users):
             _, user_items = np.nonzero(csr_interactions[test_user])
-            test_items = np.random_choice(user_items, test_items_for_user)
+            test_items = np.random.choice(user_items, test_items_for_user)
             interactions_train[test_user, test_items] = 0
-            interactions_test[test_user] = csr_interactions[test_user] - interactions_train[test_user]
+
+
+        interactions_test = csr_interactions[test_users] - interactions_train[test_users]
 
         return interactions_train, interactions_test, test_users

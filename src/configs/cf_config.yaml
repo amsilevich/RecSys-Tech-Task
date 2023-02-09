@@ -1,6 +1,6 @@
 data:
-  users_threshold: 15
-  items_threshold: 15
+  users_threshold: 50
+  items_threshold: 50
 
 splitter:
   items_for_user_threshold: 20

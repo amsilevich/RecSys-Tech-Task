@@ -3,7 +3,7 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import norm as sparse_norm
 
-from model import CollaborativeFilteringModel
+from .model import CollaborativeFilteringModel
 
 
 class ALSModel(CollaborativeFilteringModel):
@@ -113,5 +113,5 @@ class ALSModel(CollaborativeFilteringModel):
             matrix: np.ndarray
             matrix[i, j] == item_id if item_id is recommended for i-th user from 'target_users'
         """
-        recommendations = interactions[target_users] @ self.V.T @ self.V
+        recommendations = interactions[target_users] @ self.V @ self.V.T
         return np.argsort(recommendations, axis=1)[:, ::-1][:, :count]

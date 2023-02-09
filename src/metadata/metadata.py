@@ -1,6 +1,0 @@
-INTERATIONS_PATH = './data/interactions.csv'
-ITEM_ASSET_PATH = './data/item_asset.csv'
-ITEM_PRICE_PATH = './data/item_price.csv'
-ITEM_SUBCLASS_PATH = './data/item_subclass.csv'
-USER_AGE_PATH = './data/user_age.csv'
-USER_REGION_PATH = './data/user_region.csv'
