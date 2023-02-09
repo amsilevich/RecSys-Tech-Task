@@ -30,7 +30,8 @@ class TrainTestSplitter:
 
         Returns
         -------
-            (interactions_train, interactions_test): tuple[sparse.csr_matrix, sparse.csr_matrix]
+            (interactions_train, interactions_test, test_users): tuple[sparse.csr_matrix, sparse.csr_matrix,
+                                                                       np.ndarray[int]]
         """
         csr_interactions = filtered_interactions.get_features_sparse_matrix()
         potential_test_users, _ = np.nonzero((csr_interactions.sum(axis=1) > items_for_user_threshold))
@@ -45,4 +46,4 @@ class TrainTestSplitter:
             interactions_train[test_user, test_items] = 0
             interactions_test[test_user] = csr_interactions[test_user] - interactions_train[test_user]
 
-        return interactions_train, interactions_test
+        return interactions_train, interactions_test, test
