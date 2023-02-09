@@ -1,0 +1,21 @@
+data:
+  users_threshold: 15
+  items_threshold: 15
+
+splitter:
+  items_for_user_threshold: 20
+  test_items_for_user: 10
+  test_data_percent: 0.2
+
+model:
+  name: ALSModel
+  rank: 30
+  tolerance: 0.1
+
+recommend:
+  count: 10
+
+metric:
+  name: mean_average_precision
+  count: 10
+

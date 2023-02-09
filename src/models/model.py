@@ -16,7 +16,7 @@ class CollaborativeFilteringModel(ABC):
         """
         pass
 
-    def recommend(self, interactions: sparse.csr_matrix, target_users: np.ndarray, count: int) -> sparse.csr_matrix:
+    def recommend(self, interactions: sparse.csr_matrix, target_users: np.ndarray, count: int) -> np.ndarray:
         """
         Recommends 'count' items for 'target_users' from interactions matrix. Should be implemented in child classes.
         """
