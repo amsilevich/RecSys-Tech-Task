@@ -7,7 +7,7 @@
 This is library, which is a recommendation system that can recommend items to users based on their preferences as well as the preferences of other users.
 
 ### Algorithms
-1. ALS (Alternating Least Square) algorithm - Popular collaborative filtering algorithm with O(mr^2 + r^3).
+1. ALS (Alternating Least Square) algorithm - Popular collaborative filtering algorithm with the O(mr^2 + r^3) asymptotic.
 
 ### How to run
 1. Install all packages from requirements.txt
