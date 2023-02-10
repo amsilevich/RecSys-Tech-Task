@@ -1,0 +1,7 @@
+numpy==1.21.2
+pandas==1.4.3
+scipy==1.9.1
+tqdm==4.63.0
+yaml==6.0
+flake8==5.0.4
+mypy==0.971

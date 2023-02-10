@@ -66,10 +66,10 @@ class InteractionsDataset(Dataset):
         matrix = sparse.csr_matrix(
             (
                 self.interactions[Columns.DataInteractions].values,
-                 (
-                     self.interactions[Columns.UserInteractions].values,
-                     self.interactions[Columns.ItemInteractions].values
-                 )
+                (
+                 self.interactions[Columns.UserInteractions].values,
+                 self.interactions[Columns.ItemInteractions].values
+                )
             )
         )
         return matrix

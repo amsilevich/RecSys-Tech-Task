@@ -111,7 +111,8 @@ class ALSModel(CollaborativeFilteringModel):
         Returns
         -------
             matrix: np.ndarray
-            matrix[i, j] == item_id if item_id is recommended for i-th user from 'target_users'
+                (target_users.shape[0], count)
+                matrix[i, j] == item_id if item_id is recommended for i-th user from 'target_users'
         """
         recommendations = interactions[target_users] @ self.V @ self.V.T
         return np.argsort(recommendations, axis=1)[:, ::-1][:, :count]

@@ -3,6 +3,7 @@ import numpy as np
 from scipy import sparse
 from tqdm import tqdm
 
+
 class EvaluationMetrics:
     """
     Evaluates recommender system model quality

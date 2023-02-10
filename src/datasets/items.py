@@ -96,4 +96,3 @@ class ItemsDataset(Dataset):
         )
 
         return sparse.hstack([item_asset_csr, item_price_csr, item_subclass_csr])
-

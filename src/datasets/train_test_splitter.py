@@ -47,7 +47,6 @@ class TrainTestSplitter:
             test_items = np.random.choice(user_items, test_items_for_user)
             interactions_train[test_user, test_items] = 0
 
-
         interactions_test = csr_interactions[test_users] - interactions_train[test_users]
 
         return interactions_train, interactions_test, test_users

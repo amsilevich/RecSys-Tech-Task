@@ -11,4 +11,3 @@ class Orchestrator(ABC):
         Main method, runs the pipeline of data and model. Should be implemented in all class childs.
         """
         pass
-
