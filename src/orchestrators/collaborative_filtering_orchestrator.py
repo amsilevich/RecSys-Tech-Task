@@ -67,7 +67,8 @@ class CFOrchestrator(Orchestrator):
             self.interactions,
             splitter_config.get('items_for_user_threshold'),
             splitter_config.get('test_items_for_user'),
-            splitter_config.get('test_data_percent')
+            splitter_config.get('test_data_percent'),
+            splitter_config.get('random_seed')
         )
 
     def _fit_model(self, interactions_train: sparse.csr_matrix) -> None:
@@ -81,7 +82,7 @@ class CFOrchestrator(Orchestrator):
         """
         model_config = self.config.get('model')
         if model_config.get('name') == 'ALSModel':
-            self.model = ALSModel(model_config.get('rank'), model_config.get('tolerance'))
+            self.model = ALSModel(model_config.get('rank'), model_config.get('tolerance'), model_config.get('random_seed'))
         self.model.fit(interactions_train)
 
     def _recommend(self, interactions_train: sparse.csr_matrix, test_users: np.ndarray) -> np.ndarray:

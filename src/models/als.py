@@ -16,6 +16,8 @@ class ALSModel(CollaborativeFilteringModel):
         Required rank of the approximation
     tolerance: float
         Stop when this distance between Im(U_k) and Im(U_{k+1}) is reached
+    random_seed: int
+        Random seed for numpy random unique representation
 
     Attributes
     ----------
@@ -23,13 +25,16 @@ class ALSModel(CollaborativeFilteringModel):
         Required rank of the approximation
     tolerance: float
         ALS algorithm ends when tolerance distance between Im(U_k) and Im(U_{k+1}) is reached
-    VT: np.ndarray
+    V: np.ndarray
         Matrix with orthogonal rows which contains the items embeddings
+    random_seed: int = 42
+        Random seed for numpy random unique representation
     """
-    def __init__(self, rank: int = 30, tolerance: float = 1e-1):
+    def __init__(self, rank: int = 30, tolerance: float = 1e-1, random_seed: int = 42):
         self.rank = rank
         self.tolerance = tolerance
         self.V = None
+        self.random_seed = random_seed
 
     @staticmethod
     def _evaluate_approximation(A, U, S, VT):
@@ -86,7 +91,8 @@ class ALSModel(CollaborativeFilteringModel):
             CollaborativeFilteringModel
                 Fitted model
         """
-        U_k, _ = np.linalg.qr(np.random.randn(train_interactions.shape[0], self.rank))
+        np_fixed = np.random.RandomState(seed=self.random_seed)
+        U_k, _ = np.linalg.qr(np_fixed.randn(train_interactions.shape[0], self.rank, ))
         distance = self._dist_between_subspaces(np.zeros(U_k.shape), U_k)
         while distance > self.tolerance:
             self.V, S_t = np.linalg.qr(train_interactions.T @ U_k)

@@ -6,11 +6,13 @@ splitter:
   items_for_user_threshold: 20
   test_items_for_user: 10
   test_data_percent: 0.2
+  random_seed: 42
 
 model:
   name: ALSModel
   rank: 30
   tolerance: 0.1
+  random_seed: 42
 
 recommend:
   count: 10
